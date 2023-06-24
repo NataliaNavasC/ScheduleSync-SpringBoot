@@ -1,0 +1,29 @@
+package com.example.crpypst.ScheduleSync.utils.config;
+
+import java.util.ArrayList;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.example.crpypst.ScheduleSync.model.Course;
+import com.example.crpypst.ScheduleSync.model.Session;
+import com.example.crpypst.ScheduleSync.model.user.Student;
+import com.example.crpypst.ScheduleSync.repository.ICourseRepository;
+
+@Configuration
+public class ScheduleSyncConfig {
+    
+    @Bean
+    CommandLineRunner loadData(ICourseRepository courseRepository){
+        return args -> {
+            Course c1 = new Course(1, "English", "B2", true, new ArrayList<Student>(), new ArrayList<Session>());
+            Course c2 = new Course(2, "English", "B1", false, new ArrayList<Student>(), new ArrayList<Session>());
+            Course c3 = new Course(3, "French", "B2", true, new ArrayList<Student>(), new ArrayList<Session>());
+            courseRepository.save(c1);
+            courseRepository.save(c2);
+            courseRepository.save(c3);
+        };
+    }
+
+}
