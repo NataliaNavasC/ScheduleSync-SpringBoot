@@ -1,6 +1,9 @@
 package com.example.crpypst.ScheduleSync.model.dto;
 
+import java.util.List;
+
 import com.example.crpypst.ScheduleSync.model.Course;
+import com.example.crpypst.ScheduleSync.model.ScheduledSession;
 import com.example.crpypst.ScheduleSync.utils.enums.SessionType;
 
 public class SessionDTO {
@@ -9,16 +12,19 @@ public class SessionDTO {
     private String topic;
     private SessionType sessionType;
     private Course course;
+    private List<ScheduledSession> scheduledSessions;
     
     
     public SessionDTO() {
     }
 
-    public SessionDTO(long id, String topic, SessionType sessionType, Course course) {
+    public SessionDTO(long id, String topic, SessionType sessionType, Course course,
+            List<ScheduledSession> scheduledSessions) {
         this.id = id;
         this.topic = topic;
         this.sessionType = sessionType;
         this.course = course;
+        this.scheduledSessions = scheduledSessions;
     }
 
     public long getId() {
@@ -53,6 +59,12 @@ public class SessionDTO {
         this.course = course;
     }
 
-    
-    
+    public List<ScheduledSession> getScheduledSessions() {
+        return scheduledSessions;
+    }
+
+    public void setScheduledSessions(List<ScheduledSession> scheduledSessions) {
+        this.scheduledSessions = scheduledSessions;
+    }
+
 }

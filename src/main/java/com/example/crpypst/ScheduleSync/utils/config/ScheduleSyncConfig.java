@@ -1,5 +1,6 @@
 package com.example.crpypst.ScheduleSync.utils.config;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
@@ -8,9 +9,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.example.crpypst.ScheduleSync.model.Course;
+import com.example.crpypst.ScheduleSync.model.ScheduledSession;
 import com.example.crpypst.ScheduleSync.model.Session;
 import com.example.crpypst.ScheduleSync.model.user.Student;
 import com.example.crpypst.ScheduleSync.repository.ICourseRepository;
+import com.example.crpypst.ScheduleSync.repository.IScheduledSessionRepository;
 import com.example.crpypst.ScheduleSync.repository.ISessionRepository;
 import com.example.crpypst.ScheduleSync.utils.enums.CEFRLevel;
 import com.example.crpypst.ScheduleSync.utils.enums.SessionType;
@@ -19,7 +22,7 @@ import com.example.crpypst.ScheduleSync.utils.enums.SessionType;
 public class ScheduleSyncConfig {
     
     @Bean
-    CommandLineRunner loadData(ICourseRepository courseRepository, ISessionRepository sessionRepository){
+    CommandLineRunner loadData(ICourseRepository courseRepository, ISessionRepository sessionRepository, IScheduledSessionRepository scheduledSessionRepository){
         return args -> {
             
             Session s1 = new Session(1, "Verbs followed by gerunds", SessionType.CLASS, null);
@@ -33,12 +36,25 @@ public class ScheduleSyncConfig {
             sessionRepository.save(s4);
             sessionRepository.save(s5);
 
-            Course c1 = new Course(1, "English", CEFRLevel.B2, true, new ArrayList<Student>(), new ArrayList<Session>());
-            Course c2 = new Course(2, "English", CEFRLevel.B1, false, new ArrayList<Student>(), new ArrayList<Session>());
-            Course c3 = new Course(3, "French", CEFRLevel.A2, true, new ArrayList<Student>(), new ArrayList<Session>());
+            Course c1 = new Course(1, "English", CEFRLevel.B2, true, new ArrayList<Student>());
+            Course c2 = new Course(2, "English", CEFRLevel.B1, false, new ArrayList<Student>());
+            Course c3 = new Course(3, "French", CEFRLevel.A2, true, new ArrayList<Student>());
             courseRepository.save(c1);
             courseRepository.save(c2);
             courseRepository.save(c3);
+
+            ScheduledSession ss1 = new ScheduledSession(1, LocalDateTime.now(), null, null, s1);
+            ScheduledSession ss2 = new ScheduledSession(2, LocalDateTime.now(), null, null, s2);
+            ScheduledSession ss3 = new ScheduledSession(3, LocalDateTime.now(), null, null, s1);
+            ScheduledSession ss4 = new ScheduledSession(4, LocalDateTime.now(), null, null, s3);
+            ScheduledSession ss5 = new ScheduledSession(5, LocalDateTime.now(), null, null, s4);
+            ScheduledSession ss6 = new ScheduledSession(6, LocalDateTime.now(), null, null, s5);
+            scheduledSessionRepository.save(ss1);
+            scheduledSessionRepository.save(ss2);
+            scheduledSessionRepository.save(ss3);
+            scheduledSessionRepository.save(ss4);
+            scheduledSessionRepository.save(ss5);
+            scheduledSessionRepository.save(ss6);
         };
     }
 

@@ -35,21 +35,16 @@ public class Course {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "course")
     private List<Student> students;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "course")
-    private List<Session> sessions;
-
     // === Constructor ===
     public Course() {
     }
     
-    public Course(long id, String language, CEFRLevel level, boolean isCertified, List<Student> students,
-            List<Session> sessions) {
+    public Course(long id, String language, CEFRLevel level, boolean isCertified, List<Student> students) {
         this.id = id;
         this.language = language;
         this.level = level;
         this.isCertified = isCertified;
         this.students = students;
-        this.sessions = sessions;
     }
 
     // === Getters and Setters ===
@@ -91,14 +86,6 @@ public class Course {
 
     public void setStudents(List<Student> students) {
         this.students = students;
-    }
-
-    public List<Session> getSessions() {
-        return sessions;
-    }
-
-    public void setSessions(List<Session> sessions) {
-        this.sessions = sessions;
     }
 
 }
