@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.example.crpypst.ScheduleSync.model.Course;
 import com.example.crpypst.ScheduleSync.repository.ICourseRepository;
-import com.example.crpypst.ScheduleSync.service.interfaces.ICourseservice;
+import com.example.crpypst.ScheduleSync.service.interfaces.ICourseService;
 
 @Service
-public class CourseService implements ICourseservice{
+public class CourseService implements ICourseService{
 
     @Autowired
     private ICourseRepository courseRepository;
@@ -42,8 +42,9 @@ public class CourseService implements ICourseservice{
 
     @Override
     public boolean deleteCourseById(long id) {
-        if(getCourseById(id)!=null){
-            this.courseRepository.delete(getCourseById(id));
+        Course course = getCourseById(id);
+        if(course!=null){
+            this.courseRepository.delete(course);
             return true;
         }
         return false;

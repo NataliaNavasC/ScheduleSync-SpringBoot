@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.crpypst.ScheduleSync.model.Course;
 import com.example.crpypst.ScheduleSync.model.dto.CourseDTO;
-import com.example.crpypst.ScheduleSync.service.interfaces.ICourseservice;
+import com.example.crpypst.ScheduleSync.service.interfaces.ICourseService;
 import com.example.crpypst.ScheduleSync.utils.general.DTOConverter;
 
 @RestController
@@ -26,7 +26,7 @@ import com.example.crpypst.ScheduleSync.utils.general.DTOConverter;
 public class CourseController {
     
     @Autowired
-    private ICourseservice courseservice;
+    private ICourseService courseservice;
 
     @Autowired
     private DTOConverter<CourseDTO,Course> dtoConverter;

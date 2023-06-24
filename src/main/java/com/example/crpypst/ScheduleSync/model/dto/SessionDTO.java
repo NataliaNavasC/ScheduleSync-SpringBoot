@@ -1,38 +1,20 @@
-package com.example.crpypst.ScheduleSync.model;
+package com.example.crpypst.ScheduleSync.model.dto;
 
-
+import com.example.crpypst.ScheduleSync.model.Course;
 import com.example.crpypst.ScheduleSync.utils.enums.SessionType;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+public class SessionDTO {
 
-@Entity
-public class Session {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
-    @Column(nullable = false)
     private String topic;
-    
-    @Enumerated(value = EnumType.STRING)
     private SessionType sessionType;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     private Course course;
-
-
-    public Session() {
+    
+    
+    public SessionDTO() {
     }
 
-    public Session(long id, String topic, SessionType sessionType, Course course) {
+    public SessionDTO(long id, String topic, SessionType sessionType, Course course) {
         this.id = id;
         this.topic = topic;
         this.sessionType = sessionType;
@@ -71,4 +53,6 @@ public class Session {
         this.course = course;
     }
 
+    
+    
 }

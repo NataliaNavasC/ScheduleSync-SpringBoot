@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.example.crpypst.ScheduleSync.model.Course;
 
-public interface ICourseservice {
+public interface ICourseService {
     
     public List<Course> getCourses();
     
