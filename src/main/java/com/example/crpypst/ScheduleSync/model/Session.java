@@ -1,6 +1,7 @@
 package com.example.crpypst.ScheduleSync.model;
 
-import com.example.crpypst.ScheduleSync.util.SessionType;
+
+import com.example.crpypst.ScheduleSync.utils.enums.SessionType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -8,5 +8,5 @@ import com.example.crpypst.ScheduleSync.model.Course;
 
 public interface ICourseRepository extends JpaRepository<Course,Long>{
     
-    public List<Course> findByLanguage(String language);
+    public List<Course> findByLanguageIgnoreCase(String language);
 }

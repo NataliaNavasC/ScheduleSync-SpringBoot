@@ -3,9 +3,12 @@ package com.example.crpypst.ScheduleSync.model;
 import java.util.List;
 
 import com.example.crpypst.ScheduleSync.model.user.Student;
+import com.example.crpypst.ScheduleSync.utils.enums.CEFRLevel;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,7 +26,8 @@ public class Course {
     private String language;
 
     @Column(nullable = false)
-    private String level;
+    @Enumerated(value = EnumType.STRING)
+    private CEFRLevel level;
 
     @Column(nullable = false)
     private boolean isCertified;
@@ -38,7 +42,7 @@ public class Course {
     public Course() {
     }
     
-    public Course(long id, String language, String level, boolean isCertified, List<Student> students,
+    public Course(long id, String language, CEFRLevel level, boolean isCertified, List<Student> students,
             List<Session> sessions) {
         this.id = id;
         this.language = language;
@@ -65,11 +69,11 @@ public class Course {
         this.language = language;
     }
 
-    public String getLevel() {
+    public CEFRLevel getLevel() {
         return level;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(CEFRLevel level) {
         this.level = level;
     }
 

@@ -51,7 +51,7 @@ public class CourseService implements ICourseservice{
 
     @Override
     public List<Course> getCoursesByLanguage(String language) {
-        return courseRepository.findByLanguage(language);   
+        return courseRepository.findByLanguageIgnoreCase(language);   
     }
     
 }
