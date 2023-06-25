@@ -29,7 +29,10 @@ public class ScheduledSession {
 
     @ManyToOne
     private Teacher teacher;
-
+    
+    @ManyToOne
+    private Session session;
+    
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "student_session",
@@ -37,9 +40,6 @@ public class ScheduledSession {
         inverseJoinColumns = @JoinColumn(name = "scheduled_session_id")
     )
     private List<Student> students;
-
-    @ManyToOne
-    private Session session;
 
     public ScheduledSession() {
     }

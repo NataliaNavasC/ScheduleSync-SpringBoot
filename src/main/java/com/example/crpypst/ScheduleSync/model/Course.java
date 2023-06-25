@@ -1,19 +1,14 @@
 package com.example.crpypst.ScheduleSync.model;
 
-import java.util.List;
-
-import com.example.crpypst.ScheduleSync.model.user.Student;
 import com.example.crpypst.ScheduleSync.utils.enums.CEFRLevel;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 
 @Entity
 public class Course {
@@ -32,19 +27,15 @@ public class Course {
     @Column(nullable = false)
     private boolean isCertified;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "course")
-    private List<Student> students;
-
     // === Constructor ===
     public Course() {
     }
     
-    public Course(long id, String language, CEFRLevel level, boolean isCertified, List<Student> students) {
+    public Course(long id, String language, CEFRLevel level, boolean isCertified) {
         this.id = id;
         this.language = language;
         this.level = level;
         this.isCertified = isCertified;
-        this.students = students;
     }
 
     // === Getters and Setters ===
@@ -78,14 +69,6 @@ public class Course {
 
     public void setCertified(boolean isCertified) {
         this.isCertified = isCertified;
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
     }
 
 }

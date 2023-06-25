@@ -1,8 +1,6 @@
 package com.example.crpypst.ScheduleSync.model;
 
 
-import java.util.List;
-
 import com.example.crpypst.ScheduleSync.utils.enums.SessionType;
 
 import jakarta.persistence.Column;
@@ -14,7 +12,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 
 @Entity
 public class Session {

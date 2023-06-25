@@ -2,8 +2,6 @@ package com.example.crpypst.ScheduleSync.model.dto;
 
 import java.util.List;
 
-import com.example.crpypst.ScheduleSync.model.Session;
-import com.example.crpypst.ScheduleSync.model.user.Student;
 
 public class CourseDTO {
     
@@ -11,14 +9,14 @@ public class CourseDTO {
     private String language;
     private String level;
     private boolean isCertified;
-    private List<Student> students;
-    private List<Session> sessions;
+    private List<UserDTO> students;
+    private List<SessionDTO> sessions;
     
     public CourseDTO() {
     }
 
-    public CourseDTO(long id, String language, String level, boolean isCertified, List<Student> students,
-            List<Session> sessions) {
+    public CourseDTO(long id, String language, String level, boolean isCertified, List<UserDTO> students,
+            List<SessionDTO> sessions) {
         this.id = id;
         this.language = language;
         this.level = level;
@@ -59,19 +57,19 @@ public class CourseDTO {
         this.isCertified = isCertified;
     }
 
-    public List<Student> getStudents() {
+    public List<UserDTO> getStudents() {
         return students;
     }
 
-    public void setStudents(List<Student> students) {
+    public void setStudents(List<UserDTO> students) {
         this.students = students;
     }
 
-    public List<Session> getSessions() {
+    public List<SessionDTO> getSessions() {
         return sessions;
     }
 
-    public void setSessions(List<Session> sessions) {
+    public void setSessions(List<SessionDTO> sessions) {
         this.sessions = sessions;
     }
 

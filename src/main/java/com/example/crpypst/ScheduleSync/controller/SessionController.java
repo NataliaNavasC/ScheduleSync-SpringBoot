@@ -25,28 +25,28 @@ public class SessionController {
     private ISessionService sessionService;
 
     @Autowired
-    private DTOConverter<SessionDTO,Session> dtoConverter;
+    private DTOConverter dtoConverter;
 
     @GetMapping
     public List<SessionDTO> getSessions(){
-        return dtoConverter.convertEntitiesToDTOs(sessionService.getSessions(),SessionDTO.class);
+        return dtoConverter.convertListType(sessionService.getSessions(),SessionDTO.class);
     }
 
     @GetMapping("/{id}")
     public SessionDTO getSessionById(@PathVariable long id){
-        return dtoConverter.entityToDTO(sessionService.getSessionById(id), SessionDTO.class);
+        return dtoConverter.convertType(sessionService.getSessionById(id), SessionDTO.class);
     }
 
     @PostMapping
     public SessionDTO createSession(@RequestBody SessionDTO sessionDto){
-        Session session = dtoConverter.dtoToEntity(sessionDto, Session.class);
-        return dtoConverter.entityToDTO(sessionService.createSession(session), SessionDTO.class);
+        Session session = dtoConverter.convertType(sessionDto, Session.class);
+        return dtoConverter.convertType(sessionService.createSession(session), SessionDTO.class);
     }
 
     @PutMapping("/{id}")
     public SessionDTO updateSession(@PathVariable long id, @RequestBody SessionDTO sessionDto){
-        Session session = dtoConverter.dtoToEntity(sessionDto, Session.class);
-        return dtoConverter.entityToDTO(sessionService.updateSession(id, session), SessionDTO.class);
+        Session session = dtoConverter.convertType(sessionDto, Session.class);
+        return dtoConverter.convertType(sessionService.updateSession(id, session), SessionDTO.class);
     }
 
     @DeleteMapping("/{id}")

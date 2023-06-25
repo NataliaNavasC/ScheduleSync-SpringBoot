@@ -22,7 +22,7 @@ public class CourseService implements ICourseService{
 
     @Override
     public Course getCourseById(long id) {
-        return this.courseRepository.findById(id).get(); // TODO: implement Exception
+        return this.courseRepository.findById(id).get();
     }
 
     @Override

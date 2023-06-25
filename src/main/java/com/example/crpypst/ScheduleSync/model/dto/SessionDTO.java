@@ -2,8 +2,6 @@ package com.example.crpypst.ScheduleSync.model.dto;
 
 import java.util.List;
 
-import com.example.crpypst.ScheduleSync.model.Course;
-import com.example.crpypst.ScheduleSync.model.ScheduledSession;
 import com.example.crpypst.ScheduleSync.utils.enums.SessionType;
 
 public class SessionDTO {
@@ -11,15 +9,15 @@ public class SessionDTO {
     private long id;
     private String topic;
     private SessionType sessionType;
-    private Course course;
-    private List<ScheduledSession> scheduledSessions;
+    private CourseDTO course;
+    private List<ScheduledSessionDTO> scheduledSessions;
     
     
     public SessionDTO() {
     }
 
-    public SessionDTO(long id, String topic, SessionType sessionType, Course course,
-            List<ScheduledSession> scheduledSessions) {
+    public SessionDTO(long id, String topic, SessionType sessionType, CourseDTO course,
+            List<ScheduledSessionDTO> scheduledSessions) {
         this.id = id;
         this.topic = topic;
         this.sessionType = sessionType;
@@ -51,19 +49,19 @@ public class SessionDTO {
         this.sessionType = sessionType;
     }
 
-    public Course getCourse() {
+    public CourseDTO getCourse() {
         return course;
     }
 
-    public void setCourse(Course course) {
+    public void setCourse(CourseDTO course) {
         this.course = course;
     }
 
-    public List<ScheduledSession> getScheduledSessions() {
+    public List<ScheduledSessionDTO> getScheduledSessions() {
         return scheduledSessions;
     }
 
-    public void setScheduledSessions(List<ScheduledSession> scheduledSessions) {
+    public void setScheduledSessions(List<ScheduledSessionDTO> scheduledSessions) {
         this.scheduledSessions = scheduledSessions;
     }
 

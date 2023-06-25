@@ -3,23 +3,19 @@ package com.example.crpypst.ScheduleSync.model.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.example.crpypst.ScheduleSync.model.Session;
-import com.example.crpypst.ScheduleSync.model.user.Student;
-import com.example.crpypst.ScheduleSync.model.user.Teacher;
-
 
 public class ScheduledSessionDTO {
     
     private long id;
     private LocalDateTime date;
-    private Teacher teacher;
-    private List<Student> students;
-    private Session session;
+    private UserDTO teacher;
+    private List<UserDTO> students;
+    private SessionDTO session;
     
     public ScheduledSessionDTO() {
     }
 
-    public ScheduledSessionDTO(long id, LocalDateTime date, Teacher teacher, List<Student> students, Session session) {
+    public ScheduledSessionDTO(long id, LocalDateTime date, UserDTO teacher, List<UserDTO> students, SessionDTO session) {
         this.id = id;
         this.date = date;
         this.teacher = teacher;
@@ -43,27 +39,27 @@ public class ScheduledSessionDTO {
         this.date = date;
     }
 
-    public Teacher getTeacher() {
+    public UserDTO getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(Teacher teacher) {
+    public void setTeacher(UserDTO teacher) {
         this.teacher = teacher;
     }
 
-    public List<Student> getStudents() {
+    public List<UserDTO> getStudents() {
         return students;
     }
 
-    public void setStudents(List<Student> students) {
+    public void setStudents(List<UserDTO> students) {
         this.students = students;
     }
 
-    public Session getSession() {
+    public SessionDTO getSession() {
         return session;
     }
 
-    public void setSession(Session session) {
+    public void setSession(SessionDTO session) {
         this.session = session;
     }
 

@@ -25,29 +25,28 @@ public class ScheduledSessionController {
     private IScheduledSessionService scheduledSessionService;
 
     @Autowired
-    private DTOConverter<ScheduledSessionDTO,ScheduledSession>   dtoConverter;
+    private DTOConverter dtoConverter;
 
     @GetMapping
     public List<ScheduledSessionDTO> getScheduledSession(){
-        System.out.println("TESTTTTTTTTTT");
-        return dtoConverter.convertEntitiesToDTOs(scheduledSessionService.getScheduledSessions(), ScheduledSessionDTO.class);
+        return dtoConverter.convertListType(scheduledSessionService.getScheduledSessions(), ScheduledSessionDTO.class);
     }
 
     @GetMapping("/{id}")
     public ScheduledSessionDTO getScheduledSessionById(@PathVariable long id){
-        return dtoConverter.entityToDTO(scheduledSessionService.getScheduledSessionById(id), ScheduledSessionDTO.class);
+        return dtoConverter.convertType(scheduledSessionService.getScheduledSessionById(id), ScheduledSessionDTO.class);
     }
 
     @PostMapping
     public ScheduledSessionDTO createScheduledSession(@RequestBody ScheduledSessionDTO scheduledSessionDTO){
-        ScheduledSession scheduledSession = dtoConverter.dtoToEntity(scheduledSessionDTO, ScheduledSession.class);
-        return dtoConverter.entityToDTO(scheduledSessionService.createScheduledSession(scheduledSession), ScheduledSessionDTO.class);
+        ScheduledSession scheduledSession = dtoConverter.convertType(scheduledSessionDTO, ScheduledSession.class);
+        return dtoConverter.convertType(scheduledSessionService.createScheduledSession(scheduledSession), ScheduledSessionDTO.class);
     }
 
     @PutMapping("/{id}")
     public ScheduledSessionDTO updateScheduledSession(@PathVariable long id, @RequestBody ScheduledSessionDTO scheduledSessionDTO){
-        ScheduledSession scheduledSession = dtoConverter.dtoToEntity(scheduledSessionDTO, ScheduledSession.class);
-        return dtoConverter.entityToDTO(scheduledSessionService.updateScheduledSession(id,scheduledSession), ScheduledSessionDTO.class);
+        ScheduledSession scheduledSession = dtoConverter.convertType(scheduledSessionDTO, ScheduledSession.class);
+        return dtoConverter.convertType(scheduledSessionService.updateScheduledSession(id,scheduledSession), ScheduledSessionDTO.class);
     }
 
     @DeleteMapping("/{id}")
