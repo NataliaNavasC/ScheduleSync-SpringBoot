@@ -3,11 +3,19 @@ package com.example.crpypst.ScheduleSync.utils.config;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.example.crpypst.ScheduleSync.model.Course;
 import com.example.crpypst.ScheduleSync.model.ScheduledSession;
@@ -24,6 +32,9 @@ import com.example.crpypst.ScheduleSync.utils.enums.SessionType;
 
 @Configuration
 public class ScheduleSyncConfig {
+
+    @Autowired
+    private Environment env;
     
     @Bean
     CommandLineRunner loadData(ICourseRepository courseRepository, ISessionRepository sessionRepository,
@@ -96,6 +107,34 @@ public class ScheduleSyncConfig {
     @Bean
     public ModelMapper modelMapper(){
         return new ModelMapper();
+    }
+
+
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer(){
+        return new WebMvcConfigurer() {
+            public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/greeting-javaconfig").allowedOrigins(getListProperty("cors.allowed.origins"));
+				registry.addMapping("/greeting-javaconfig").allowedMethods(getListProperty("cors.allowed.methods"));
+				registry.addMapping("/greeting-javaconfig").allowedHeaders(getListProperty("cors.allowed.headers"));
+				registry.addMapping("/greeting-javaconfig").exposedHeaders(getListProperty("cors.allowed.headers"));
+				registry.addMapping("/greeting-javaconfig").allowCredentials(getBooleanProperty("cors.allow.credentials"));
+				registry.addMapping("/greeting-javaconfig").maxAge(getLongProperty("cors.maxage"));
+			}
+        };
+    }
+
+    private String[] getListProperty(String key){
+        return env.getProperty(key).split(",");
+    }
+
+    private Boolean getBooleanProperty(String key){
+        return Boolean.valueOf(env.getProperty(key));
+    }
+
+    private Long getLongProperty(String key){
+        return Long.valueOf(env.getProperty(key));
     }
 
 }
