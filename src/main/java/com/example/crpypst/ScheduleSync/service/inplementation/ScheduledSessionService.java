@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.example.crpypst.ScheduleSync.model.ScheduledSession;
 import com.example.crpypst.ScheduleSync.repository.IScheduledSessionRepository;
 import com.example.crpypst.ScheduleSync.service.interfaces.IScheduledSessionService;
+import com.example.crpypst.ScheduleSync.utils.enums.EntityType;
+import com.example.crpypst.ScheduleSync.utils.exceptions.entitynotfound.EntityNotFoundException;
 
 @Service
 public class ScheduledSessionService implements IScheduledSessionService{
@@ -22,7 +24,7 @@ public class ScheduledSessionService implements IScheduledSessionService{
 
     @Override
     public ScheduledSession getScheduledSessionById(long id) {
-        return this.scheduledSessionRepository.findById(id).get();
+        return this.scheduledSessionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, EntityType.SCHEDULED_SESSION));
     }
 
     @Override
@@ -36,17 +38,14 @@ public class ScheduledSessionService implements IScheduledSessionService{
             scheduledSession.setDate(scheduledSessionToUpdate.getDate());
             scheduledSession.setTeacher(scheduledSessionToUpdate.getTeacher());
             return scheduledSessionRepository.save(scheduledSession);
-        }).get();
+        }).orElseThrow(() -> new EntityNotFoundException(id, EntityType.SCHEDULED_SESSION));
     }
 
     @Override
     public boolean deteleSessionById(long id) {
-        ScheduledSession scheduledSession = getScheduledSessionById(id);
-        if(scheduledSession!=null){
-            this.scheduledSessionRepository.delete(scheduledSession);
-            return true;
-        }
-        return false;
+        ScheduledSession scheduledSession = this.scheduledSessionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, EntityType.SCHEDULED_SESSION));
+        this.scheduledSessionRepository.delete(scheduledSession);
+        return true;
     }
 
 

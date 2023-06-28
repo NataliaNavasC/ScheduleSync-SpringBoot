@@ -13,6 +13,8 @@ import com.example.crpypst.ScheduleSync.model.user.Teacher;
 import com.example.crpypst.ScheduleSync.model.user.User;
 import com.example.crpypst.ScheduleSync.repository.IUserRepository;
 import com.example.crpypst.ScheduleSync.service.interfaces.IUserService;
+import com.example.crpypst.ScheduleSync.utils.enums.EntityType;
+import com.example.crpypst.ScheduleSync.utils.exceptions.entitynotfound.EntityNotFoundException;
 import com.example.crpypst.ScheduleSync.utils.general.DTOConverter;
 
 
@@ -32,7 +34,7 @@ public class UserService implements IUserService{
 
     @Override
     public UserDTO getUserById(long id){
-        return this.dtoConverter.convertType(this.userRepository.findById(id), UserDTO.class);
+        return dtoConverter.convertType(this.userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, EntityType.USER)),UserDTO.class);
     }
 
     @Override
@@ -54,8 +56,9 @@ public class UserService implements IUserService{
             user.get().setActive(false);
             this.userRepository.save(user.get());
             return true;
+        }else{
+            throw new EntityNotFoundException(username, EntityType.USER);
         }
-        return false;
 
     }
     

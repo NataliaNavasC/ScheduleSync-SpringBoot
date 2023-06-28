@@ -3,7 +3,6 @@ package com.example.crpypst.ScheduleSync.utils.config;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +10,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -109,18 +105,17 @@ public class ScheduleSyncConfig {
         return new ModelMapper();
     }
 
-
-
     @Bean
     public WebMvcConfigurer corsConfigurer(){
         return new WebMvcConfigurer() {
             public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/greeting-javaconfig").allowedOrigins(getListProperty("cors.allowed.origins"));
-				registry.addMapping("/greeting-javaconfig").allowedMethods(getListProperty("cors.allowed.methods"));
-				registry.addMapping("/greeting-javaconfig").allowedHeaders(getListProperty("cors.allowed.headers"));
-				registry.addMapping("/greeting-javaconfig").exposedHeaders(getListProperty("cors.allowed.headers"));
-				registry.addMapping("/greeting-javaconfig").allowCredentials(getBooleanProperty("cors.allow.credentials"));
-				registry.addMapping("/greeting-javaconfig").maxAge(getLongProperty("cors.maxage"));
+				registry.addMapping("/javaconfig")
+                .allowedOrigins(getListProperty("cors.allowed.origins"))
+				.allowedMethods(getListProperty("cors.allowed.methods"))
+				.allowedHeaders(getListProperty("cors.allowed.headers"))
+				.exposedHeaders(getListProperty("cors.allowed.headers"))
+				.allowCredentials(getBooleanProperty("cors.allow.credentials"))
+				.maxAge(getLongProperty("cors.maxage"));
 			}
         };
     }

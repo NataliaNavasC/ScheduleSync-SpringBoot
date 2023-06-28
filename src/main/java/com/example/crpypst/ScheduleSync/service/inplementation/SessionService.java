@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.example.crpypst.ScheduleSync.model.Session;
 import com.example.crpypst.ScheduleSync.repository.ISessionRepository;
 import com.example.crpypst.ScheduleSync.service.interfaces.ISessionService;
+import com.example.crpypst.ScheduleSync.utils.enums.EntityType;
+import com.example.crpypst.ScheduleSync.utils.exceptions.entitynotfound.EntityNotFoundException;
 
 @Service
 public class SessionService implements ISessionService{
@@ -22,7 +24,7 @@ public class SessionService implements ISessionService{
 
     @Override
     public Session getSessionById(long id) {
-        return this.sessionRepository.findById(id).get();
+        return this.sessionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, EntityType.SESSION));
     }
 
     @Override
@@ -36,17 +38,14 @@ public class SessionService implements ISessionService{
             session.setSessionType(sessionToUpdate.getSessionType());
             session.setTopic(sessionToUpdate.getTopic());
             return this.sessionRepository.save(session);
-        }).get();
+        }).orElseThrow(() -> new EntityNotFoundException(id, EntityType.SESSION));
     }
 
     @Override
     public boolean deteleSessionById(long id) {
-    Session session = getSessionById(id);
-        if(session!=null){
-            this.sessionRepository.delete(session);
-            return true;
-        }
-        return false;
+        Session session = this.sessionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, EntityType.SESSION));
+        this.sessionRepository.delete(session);
+        return true;
     }
 
    

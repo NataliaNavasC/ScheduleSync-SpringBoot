@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.example.crpypst.ScheduleSync.model.Course;
 import com.example.crpypst.ScheduleSync.repository.ICourseRepository;
 import com.example.crpypst.ScheduleSync.service.interfaces.ICourseService;
+import com.example.crpypst.ScheduleSync.utils.enums.EntityType;
+import com.example.crpypst.ScheduleSync.utils.exceptions.entitynotfound.EntityNotFoundException;
 
 @Service
 public class CourseService implements ICourseService{
@@ -22,7 +24,7 @@ public class CourseService implements ICourseService{
 
     @Override
     public Course getCourseById(long id) {
-        return this.courseRepository.findById(id).get();
+        return this.courseRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, EntityType.COURSE));
     }
 
     @Override
@@ -37,17 +39,14 @@ public class CourseService implements ICourseService{
             course.setLevel(courseToUpdate.getLevel());
             course.setCertified(courseToUpdate.isCertified());
             return this.courseRepository.save(course);
-        }).get();
+        }).orElseThrow(() -> new EntityNotFoundException(id, EntityType.COURSE));
     }
 
     @Override
     public boolean deleteCourseById(long id) {
-        Course course = getCourseById(id);
-        if(course!=null){
-            this.courseRepository.delete(course);
-            return true;
-        }
-        return false;
+        Course course = this.courseRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, EntityType.COURSE));
+        this.courseRepository.delete(course);
+        return true;
     }
 
     @Override
