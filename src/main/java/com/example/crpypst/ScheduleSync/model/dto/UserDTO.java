@@ -15,12 +15,13 @@ public class UserDTO{
     private List<ScheduledSessionDTO> scheduledSessions;
     private Role role;
     private boolean isActive;
+    private boolean isLoggedIn;
     
     public UserDTO() {
     }
 
     public UserDTO(long id, String username, String password, CourseDTO course, List<ScheduledSessionDTO> scheduledSessions,
-            Role role, boolean isActive) {
+            Role role, boolean isActive, boolean isLoggedIn) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -28,6 +29,7 @@ public class UserDTO{
         this.scheduledSessions = scheduledSessions;
         this.role = role;
         this.isActive = isActive;
+        this.isLoggedIn = isLoggedIn;
     }
 
     public long getId() {
@@ -86,4 +88,13 @@ public class UserDTO{
         this.isActive = isActive;
     }
 
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setLoggedIn(boolean isLoggedIn) {
+        this.isLoggedIn = isLoggedIn;
+    }
+
+    
 }

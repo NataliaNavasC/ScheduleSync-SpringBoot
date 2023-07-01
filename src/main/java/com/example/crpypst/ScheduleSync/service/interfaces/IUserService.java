@@ -18,4 +18,7 @@ public interface IUserService {
     
     public List<UserDTO> getTeachers();
 
+    // Temp login
+    public UserDTO login(UserDTO userDTO);
+
 }
