@@ -109,7 +109,7 @@ public class ScheduleSyncConfig {
     public WebMvcConfigurer corsConfigurer(){
         return new WebMvcConfigurer() {
             public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/javaconfig")
+				registry.addMapping("/**")
                 .allowedOrigins(getListProperty("cors.allowed.origins"))
 				.allowedMethods(getListProperty("cors.allowed.methods"))
 				.allowedHeaders(getListProperty("cors.allowed.headers"))
