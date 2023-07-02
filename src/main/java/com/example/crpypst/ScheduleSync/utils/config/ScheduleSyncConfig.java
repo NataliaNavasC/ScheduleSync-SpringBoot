@@ -3,6 +3,7 @@ package com.example.crpypst.ScheduleSync.utils.config;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -34,7 +42,7 @@ public class ScheduleSyncConfig {
     
     @Bean
     CommandLineRunner loadData(ICourseRepository courseRepository, ISessionRepository sessionRepository,
-     IScheduledSessionRepository scheduledSessionRepository, IUserRepository userRepository){
+     IScheduledSessionRepository scheduledSessionRepository, IUserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder){
         return args -> {
             
             Course c1 = new Course(1, "English", CEFRLevel.B2, true);
@@ -67,7 +75,7 @@ public class ScheduleSyncConfig {
             ss6 = scheduledSessionRepository.save(ss6);
             
             // Student st1 = new Student(1, "lostvayne", "dummy", true,c1,Arrays.asList(ss1,ss2));
-            Student st1 = new Student(1, "lostvayne", "dummy", true,c1,new ArrayList<ScheduledSession>(Arrays.asList(ss1,ss2)));
+            Student st1 = new Student(1, "lostvayne", bCryptPasswordEncoder.encode("dummy"), true,c1,new ArrayList<ScheduledSession>(Arrays.asList(ss1,ss2)));
             Student st2 = new Student(2, "crpypst", "dummy", true,c1,new ArrayList<ScheduledSession>(Arrays.asList(ss1,ss2)));
             Student st3 = new Student(3, "test", "dummy", false,c2,new ArrayList<ScheduledSession>(Arrays.asList(ss1,ss3)));
             st1 = userRepository.save(st1);
@@ -105,23 +113,43 @@ public class ScheduleSyncConfig {
         return new ModelMapper();
     }
 
+    // @Bean
+    // public WebMvcConfigurer corsConfigurer(){
+    //     return new WebMvcConfigurer() {
+    //         public void addCorsMappings(CorsRegistry registry) {
+	// 			registry.addMapping("/**")
+    //             .allowedOrigins(getListProperty("cors.allowed.origins"))
+	// 			.allowedMethods(getListProperty("cors.allowed.methods"))
+	// 			.allowedHeaders(getListProperty("cors.allowed.headers"))
+	// 			.exposedHeaders(getListProperty("cors.allowed.headers"))
+	// 			.allowCredentials(getBooleanProperty("cors.allow.credentials"))
+	// 			.maxAge(getLongProperty("cors.maxage"));
+	// 		}
+    //     };
+    // }
+
     @Bean
-    public WebMvcConfigurer corsConfigurer(){
-        return new WebMvcConfigurer() {
-            public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-                .allowedOrigins(getListProperty("cors.allowed.origins"))
-				.allowedMethods(getListProperty("cors.allowed.methods"))
-				.allowedHeaders(getListProperty("cors.allowed.headers"))
-				.exposedHeaders(getListProperty("cors.allowed.headers"))
-				.allowCredentials(getBooleanProperty("cors.allow.credentials"))
-				.maxAge(getLongProperty("cors.maxage"));
-			}
-        };
+    public CorsConfigurationSource corsConfigurationSource(){
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(getListProperty("cors.allowed.origins"));
+        config.setAllowedMethods(getListProperty("cors.allowed.methods"));
+        config.setAllowedHeaders(getListProperty("cors.allowed.headers"));
+        config.setExposedHeaders(getListProperty("cors.exposed.headers"));
+        config.setAllowCredentials(getBooleanProperty("cors.allow.credentials"));
+        config.setMaxAge(getLongProperty("cors.maxage"));
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 
-    private String[] getListProperty(String key){
-        return env.getProperty(key).split(",");
+    
+
+    // private String[] getListProperty(String key){
+    //     return env.getProperty(key).split(",");
+    // }
+
+    private List<String> getListProperty(String key){
+        return Arrays.asList(env.getProperty(key).split(","));
     }
 
     private Boolean getBooleanProperty(String key){
