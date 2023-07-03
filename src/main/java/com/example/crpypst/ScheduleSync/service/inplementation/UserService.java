@@ -38,6 +38,11 @@ public class UserService implements IUserService{
     }
 
     @Override
+    public UserDTO getUserByUsername(String username){
+        return dtoConverter.convertType(this.userRepository.findByUsername(username).orElseThrow(()-> new EntityNotFoundException(username, EntityType.USER)),UserDTO.class);
+    }
+
+    @Override
     public UserDTO createUser(UserDTO userDto) {
         return switch(userDto.getRole()){
             case ADMIN -> dtoConverter.convertType(this.userRepository.save(dtoConverter.convertType(userDto,Admin.class)),UserDTO.class);

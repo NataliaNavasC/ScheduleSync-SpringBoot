@@ -15,6 +15,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.example.crpypst.ScheduleSync.model.dto.LoginDTO;
 import com.example.crpypst.ScheduleSync.model.dto.UserDTO;
 import com.example.crpypst.ScheduleSync.utils.constants.SecurityConstants;
 import com.example.crpypst.ScheduleSync.utils.exceptions.badcredentials.InvalidCredentialsException;
@@ -40,11 +41,13 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-            UserDTO credentials = new ObjectMapper().readValue(request.getInputStream(), UserDTO.class);
-            System.out.println(credentials.toString());
+            LoginDTO credentials = new ObjectMapper().readValue(request.getInputStream(), LoginDTO.class);
+            logger.info(credentials.toString());
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword(), new ArrayList<>()));
         } catch (Exception e) {
-            throw new InvalidCredentialsException();
+            // throw new InvalidCredentialsException();
+            e.printStackTrace();
+            return null;
         }
     }
 

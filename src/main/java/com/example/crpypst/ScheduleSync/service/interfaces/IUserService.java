@@ -10,6 +10,8 @@ public interface IUserService {
 
     public UserDTO getUserById(long id);
 
+    public UserDTO getUserByUsername(String username);
+
     public UserDTO createUser(UserDTO userDto);
 
     public boolean deleteUserByUsername(String username);

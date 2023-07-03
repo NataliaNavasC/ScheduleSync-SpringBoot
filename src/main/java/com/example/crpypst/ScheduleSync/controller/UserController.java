@@ -27,9 +27,9 @@ public class UserController {
         return userService.getUsers();
     }
 
-    @GetMapping("/{id}")
-    public UserDTO getUserById(@PathVariable long id){
-        return this.userService.getUserById(id);
+    @GetMapping("/{username}")
+    public UserDTO getUserByUsername(@PathVariable String username){
+        return this.userService.getUserByUsername(username);
     }
 
     @PostMapping
