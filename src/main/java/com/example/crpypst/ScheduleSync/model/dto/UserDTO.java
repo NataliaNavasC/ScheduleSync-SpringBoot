@@ -14,22 +14,20 @@ public class UserDTO{
     @JsonIgnore
     private List<ScheduledSessionDTO> scheduledSessions;
     private Role role;
-    private boolean isActive;
-    private boolean isLoggedIn;
+    private boolean active;
     
     public UserDTO() {
     }
 
     public UserDTO(long id, String username, String password, CourseDTO course, List<ScheduledSessionDTO> scheduledSessions,
-            Role role, boolean isActive, boolean isLoggedIn) {
+            Role role, boolean active, boolean isLoggedIn) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.course = course;
         this.scheduledSessions = scheduledSessions;
         this.role = role;
-        this.isActive = isActive;
-        this.isLoggedIn = isLoggedIn;
+        this.active = active;
     }
 
     public long getId() {
@@ -81,27 +79,21 @@ public class UserDTO{
     }
 
     public boolean isActive() {
-        return isActive;
+        return active;
     }
 
-    public void setActive(boolean isActive) {
-        this.isActive = isActive;
+    public void setActive(boolean active) {
+        this.active = active;
     }
-
-    public boolean isLoggedIn() {
-        return isLoggedIn;
-    }
-
-    public void setLoggedIn(boolean isLoggedIn) {
-        this.isLoggedIn = isLoggedIn;
-    }
+    
 
     @Override
     public String toString() {
         return "UserDTO [id=" + id + ", username=" + username + ", password=" + password + ", course=" + course
-                + ", scheduledSessions=" + scheduledSessions + ", role=" + role + ", isActive=" + isActive
-                + ", isLoggedIn=" + isLoggedIn + "]";
+                + ", scheduledSessions=" + scheduledSessions + ", role=" + role + ", active=" + active + "]";
     }
+
+
 
     
     

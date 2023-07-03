@@ -11,15 +11,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.example.crpypst.ScheduleSync.model.Course;
 import com.example.crpypst.ScheduleSync.model.ScheduledSession;
@@ -76,8 +71,8 @@ public class ScheduleSyncConfig {
             
             // Student st1 = new Student(1, "lostvayne", "dummy", true,c1,Arrays.asList(ss1,ss2));
             Student st1 = new Student(1, "lostvayne", bCryptPasswordEncoder.encode("dummy"), true,c1,new ArrayList<ScheduledSession>(Arrays.asList(ss1,ss2)));
-            Student st2 = new Student(2, "crpypst", "dummy", true,c1,new ArrayList<ScheduledSession>(Arrays.asList(ss1,ss2)));
-            Student st3 = new Student(3, "test", "dummy", false,c2,new ArrayList<ScheduledSession>(Arrays.asList(ss1,ss3)));
+            Student st2 = new Student(2, "crpypst", bCryptPasswordEncoder.encode("dummy"), true,c1,new ArrayList<ScheduledSession>(Arrays.asList(ss1,ss2)));
+            Student st3 = new Student(3, "test", bCryptPasswordEncoder.encode("dummy"), false,c2,new ArrayList<ScheduledSession>(Arrays.asList(ss1,ss3)));
             st1 = userRepository.save(st1);
             st2 = userRepository.save(st2);
             st3 = userRepository.save(st3);
@@ -92,15 +87,15 @@ public class ScheduleSyncConfig {
             scheduledSessionRepository.save(ss2);
             scheduledSessionRepository.save(ss3);
       
-            Teacher t1 = new Teacher(1, "profe1", "dummy", true);
-            Teacher t2 = new Teacher(2, "profe2", "dummy", true);
-            Teacher t3 = new Teacher(3, "profe3", "dummy", true);
+            Teacher t1 = new Teacher(1, "profe1", bCryptPasswordEncoder.encode("dummy"), true);
+            Teacher t2 = new Teacher(2, "profe2", bCryptPasswordEncoder.encode("dummy"), true);
+            Teacher t3 = new Teacher(3, "profe3", bCryptPasswordEncoder.encode("dummy"), true);
             userRepository.save(t1);
             userRepository.save(t2);
             userRepository.save(t3);
         
-            Admin a1 = new Admin(1, "crispy", "dummy", true);
-            Admin a2 = new Admin(2, "lost", "dummy", true);
+            Admin a1 = new Admin(1, "crispy", bCryptPasswordEncoder.encode("dummy"), true);
+            Admin a2 = new Admin(2, "lost", bCryptPasswordEncoder.encode("dummy"), true);
             userRepository.save(a1);
             userRepository.save(a2);
 

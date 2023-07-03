@@ -24,16 +24,16 @@ public abstract class User {
     private String password;
 
     @Column(nullable = false)
-    private boolean isActive;
+    private boolean active;
 
     public User() {
     }
 
-    public User(long id, String username, String password, boolean isActive) {
+    public User(long id, String username, String password, boolean active) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.isActive = isActive;
+        this.active = active;
     }
 
     public long getId() {
@@ -61,18 +61,16 @@ public abstract class User {
     }
 
     public boolean isActive() {
-        return isActive;
+        return active;
     }
 
-    public void setActive(boolean isActive) {
-        this.isActive = isActive;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", username=" + username + ", password=" + password + ", isActive=" + isActive + "]";
+        return "User [id=" + id + ", username=" + username + ", password=" + password + ", isActive=" + active + "]";
     }
-
-    
 
 }

@@ -27,9 +27,9 @@ public class UserController {
         return userService.getUsers();
     }
 
-    @GetMapping("/{id}")
-    public UserDTO getUserById(@PathVariable long id){
-        return this.userService.getUserById(id);
+    @GetMapping("/{username}")
+    public UserDTO getUserByUsername(@PathVariable String username){
+        return this.userService.getUserByUsername(username);
     }
 
     @PostMapping
@@ -46,11 +46,5 @@ public class UserController {
     public List<UserDTO> getStudents(){
         return this.userService.getStudents();
     }
-
-    
-    // @PostMapping("/login")
-    // public UserDTO login(@RequestBody UserDTO user){
-    //     return this.userService.login(user);
-    // }
 
 }

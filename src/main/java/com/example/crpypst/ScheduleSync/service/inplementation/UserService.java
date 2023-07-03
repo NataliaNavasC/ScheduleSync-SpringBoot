@@ -38,6 +38,11 @@ public class UserService implements IUserService{
     }
 
     @Override
+    public UserDTO getUserByUsername(String username){
+        return dtoConverter.convertType(this.userRepository.findByUsername(username).orElseThrow(()-> new EntityNotFoundException(username, EntityType.USER)),UserDTO.class);
+    }
+
+    @Override
     public UserDTO createUser(UserDTO userDto) {
         return switch(userDto.getRole()){
             case ADMIN -> dtoConverter.convertType(this.userRepository.save(dtoConverter.convertType(userDto,Admin.class)),UserDTO.class);
@@ -71,25 +76,5 @@ public class UserService implements IUserService{
     public List<UserDTO> getTeachers() {
         return this.dtoConverter.convertListType(this.userRepository.findAllTeachers(), UserDTO.class);
     }
-
-
-    // Temp method
-    // @Override
-    // public UserDTO login(UserDTO dto) {
-    //     Optional<User> userOp = this.userRepository.findByUsername(dto.getUsername());
-    //     if(userOp.isPresent()){
-    //         UserDTO userDTO = dtoConverter.convertType(userOp.get(), UserDTO.class);
-    //         if(userOp.get().getPassword().equals(dto.getPassword())){
-    //             userDTO.setLoggedIn(true);
-    //         }
-    //         else{
-    //             userDTO = new UserDTO(0, dto.getUsername(), null, null, null, null, false, false);
-    //         }
-    //         return userDTO;
-    //     }else{
-    //         throw new EntityNotFoundException(dto.getUsername(), EntityType.USER);
-    //     }
-        
-    // }
 
 }

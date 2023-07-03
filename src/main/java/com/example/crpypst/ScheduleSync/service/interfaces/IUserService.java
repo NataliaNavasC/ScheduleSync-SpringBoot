@@ -10,6 +10,8 @@ public interface IUserService {
 
     public UserDTO getUserById(long id);
 
+    public UserDTO getUserByUsername(String username);
+
     public UserDTO createUser(UserDTO userDto);
 
     public boolean deleteUserByUsername(String username);
@@ -17,8 +19,5 @@ public interface IUserService {
     public List<UserDTO> getStudents();
     
     public List<UserDTO> getTeachers();
-
-    // Temp login
-    // public UserDTO login(UserDTO userDTO);
 
 }
