@@ -47,10 +47,4 @@ public class UserController {
         return this.userService.getStudents();
     }
 
-    
-    // @PostMapping("/login")
-    // public UserDTO login(@RequestBody UserDTO user){
-    //     return this.userService.login(user);
-    // }
-
 }

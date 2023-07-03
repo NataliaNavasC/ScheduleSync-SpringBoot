@@ -1,4 +1,4 @@
-package com.example.crpypst.ScheduleSync.utils.exceptions.entitynotfound;
+package com.example.crpypst.ScheduleSync.utils.exceptions.badcredentials;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -6,15 +6,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-
 @ControllerAdvice
-public class EntityNotFoundHandler {
+public class InvalidCredentialsHandler {
     
     @ResponseBody
-    @ExceptionHandler(EntityNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    String entityNotFoundHandler(EntityNotFoundException ex){
+    @ExceptionHandler(InvalidCredentialsException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    String invalidCredentialsHandler(InvalidCredentialsException ex){
         return ex.getMessage();
     }
-    
+     
 }

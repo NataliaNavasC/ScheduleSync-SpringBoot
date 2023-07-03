@@ -17,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.example.crpypst.ScheduleSync.model.dto.UserDTO;
 import com.example.crpypst.ScheduleSync.utils.constants.SecurityConstants;
+import com.example.crpypst.ScheduleSync.utils.exceptions.badcredentials.InvalidCredentialsException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Jwts;
@@ -43,9 +44,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             System.out.println(credentials.toString());
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword(), new ArrayList<>()));
         } catch (Exception e) {
-            // e.printStackTrace();
-            logger.error("Bad credentials");
-            return null;
+            throw new InvalidCredentialsException();
         }
     }
 
@@ -58,8 +57,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         
         final Map<String, Object> claims = new HashMap<>();
         claims.put("Authorities", authorities);
-
-        // Key key = new SecretKeySpec(SecurityConstants.SUPER_SECRET_KEY.getBytes(), "HS512");
 
         String token = Jwts.builder()
             .setIssuedAt(new Date())
