@@ -44,5 +44,11 @@ public class Student extends User{
         this.scheduledSessions = scheduledSessions;
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + " Student [course=" + course + ", scheduledSessions=" + scheduledSessions + "]";
+    }
+
+    
         
 }

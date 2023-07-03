@@ -74,22 +74,22 @@ public class UserService implements IUserService{
 
 
     // Temp method
-    @Override
-    public UserDTO login(UserDTO dto) {
-        Optional<User> userOp = this.userRepository.findByUsername(dto.getUsername());
-        if(userOp.isPresent()){
-            UserDTO userDTO = dtoConverter.convertType(userOp.get(), UserDTO.class);
-            if(userOp.get().getPassword().equals(dto.getPassword())){
-                userDTO.setLoggedIn(true);
-            }
-            else{
-                userDTO = new UserDTO(0, dto.getUsername(), null, null, null, null, false, false);
-            }
-            return userDTO;
-        }else{
-            throw new EntityNotFoundException(dto.getUsername(), EntityType.USER);
-        }
+    // @Override
+    // public UserDTO login(UserDTO dto) {
+    //     Optional<User> userOp = this.userRepository.findByUsername(dto.getUsername());
+    //     if(userOp.isPresent()){
+    //         UserDTO userDTO = dtoConverter.convertType(userOp.get(), UserDTO.class);
+    //         if(userOp.get().getPassword().equals(dto.getPassword())){
+    //             userDTO.setLoggedIn(true);
+    //         }
+    //         else{
+    //             userDTO = new UserDTO(0, dto.getUsername(), null, null, null, null, false, false);
+    //         }
+    //         return userDTO;
+    //     }else{
+    //         throw new EntityNotFoundException(dto.getUsername(), EntityType.USER);
+    //     }
         
-    }
+    // }
 
 }
