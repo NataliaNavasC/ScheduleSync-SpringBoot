@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.crypto.spec.SecretKeySpec;
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,13 +15,14 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.example.crpypst.ScheduleSync.model.user.Student;
-import com.example.crpypst.ScheduleSync.model.user.User;
+import com.example.crpypst.ScheduleSync.model.dto.UserDTO;
 import com.example.crpypst.ScheduleSync.utils.constants.SecurityConstants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,12 +38,13 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        System.out.println("FILTROOOOOO AUTHHHHHHHHHHHHHHHHHH");
         try {
-            Student credentials = new ObjectMapper().readValue(request.getInputStream(), Student.class);
+            UserDTO credentials = new ObjectMapper().readValue(request.getInputStream(), UserDTO.class);
+            System.out.println(credentials.toString());
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword(), new ArrayList<>()));
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
+            logger.error("Bad credentials");
             return null;
         }
     }
@@ -59,7 +59,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         final Map<String, Object> claims = new HashMap<>();
         claims.put("Authorities", authorities);
 
-        Key key = new SecretKeySpec(SecurityConstants.SUPER_SECRET_KEY.getBytes(), "HS512");
+        // Key key = new SecretKeySpec(SecurityConstants.SUPER_SECRET_KEY.getBytes(), "HS512");
 
         String token = Jwts.builder()
             .setIssuedAt(new Date())
@@ -67,9 +67,14 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             .setClaims(claims)
 			.setSubject(((org.springframework.security.core.userdetails.User)auth.getPrincipal()).getUsername())
 			.setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.TOKEN_EXPIRATION_TIME))
-            .signWith(key, SignatureAlgorithm.HS512)
+            .signWith(getSignInkey(), SignatureAlgorithm.HS512)
             .compact();
 
 		response.addHeader(SecurityConstants.HEADER_AUTHORIZATION_KEY, SecurityConstants.TOKEN_BEARER_PREFIX + token);
+    }
+
+     private Key getSignInkey(){
+        byte[] keyByres = Decoders.BASE64.decode(SecurityConstants.SUPER_SECRET_KEY);
+        return Keys.hmacShaKeyFor(keyByres);
     }
 }

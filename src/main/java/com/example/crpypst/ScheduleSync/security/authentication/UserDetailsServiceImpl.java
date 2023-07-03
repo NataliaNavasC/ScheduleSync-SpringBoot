@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import com.example.crpypst.ScheduleSync.model.user.Student;
 import com.example.crpypst.ScheduleSync.model.user.User;
 import com.example.crpypst.ScheduleSync.repository.IUserRepository;
 import com.example.crpypst.ScheduleSync.utils.enums.EntityType;
@@ -26,8 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String username){
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAA");
-        Student userFound = (Student)userRepository.findByUsername(username).orElseThrow(()-> new EntityNotFoundException(username,EntityType.USER));
+        User userFound = userRepository.findByUsername(username).orElseThrow(()-> new EntityNotFoundException(username,EntityType.USER));
         try {
             List<SimpleGrantedAuthority> roles = getAuthorities(userFound);
             return new org.springframework.security.core.userdetails.User
@@ -40,7 +38,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 
     private List<SimpleGrantedAuthority> getAuthorities(User user){
         List<SimpleGrantedAuthority> roles = new ArrayList<>();
-        roles.add(new SimpleGrantedAuthority("ROLE_"+user.getClass().getName().toUpperCase()));
+        roles.add(new SimpleGrantedAuthority("ROLE_"+user.getClass().getSimpleName().toUpperCase()));
         return roles;
     }
 }

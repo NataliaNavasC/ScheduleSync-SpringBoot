@@ -18,6 +18,8 @@ import com.example.crpypst.ScheduleSync.utils.constants.SecurityConstants;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,13 +32,11 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter{
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        System.out.println("FILTROOOOOO AUTHHHHHHHHHHHHHHHHHH 2222222222222222222222");
         String token = request.getHeader(SecurityConstants.HEADER_AUTHORIZATION_KEY);
 		if (token != null) {
-            Key key = new SecretKeySpec(SecurityConstants.SUPER_SECRET_KEY.getBytes(), "HS512");
 			// Se procesa el token y se recupera el nombre de usuario.
 			Claims body = Jwts.parserBuilder()
-            .setSigningKey(key)
+            .setSigningKey(getSignInkey())
             .build()
             .parseClaimsJws(token.replace(SecurityConstants.TOKEN_BEARER_PREFIX, ""))
             .getBody();
@@ -67,4 +67,8 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter{
         chain.doFilter(request, response);
     }
 
+    private Key getSignInkey(){
+        byte[] keyByres = Decoders.BASE64.decode(SecurityConstants.SUPER_SECRET_KEY);
+        return Keys.hmacShaKeyFor(keyByres);
+    }
 }

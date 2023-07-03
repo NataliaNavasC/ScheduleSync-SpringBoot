@@ -96,5 +96,13 @@ public class UserDTO{
         this.isLoggedIn = isLoggedIn;
     }
 
+    @Override
+    public String toString() {
+        return "UserDTO [id=" + id + ", username=" + username + ", password=" + password + ", course=" + course
+                + ", scheduledSessions=" + scheduledSessions + ", role=" + role + ", isActive=" + isActive
+                + ", isLoggedIn=" + isLoggedIn + "]";
+    }
+
+    
     
 }
