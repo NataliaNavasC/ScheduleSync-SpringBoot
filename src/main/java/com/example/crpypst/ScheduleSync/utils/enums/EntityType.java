@@ -4,5 +4,6 @@ public enum EntityType {
     COURSE,
     SCHEDULED_SESSION,
     SESSION,
-    USER
+    USER,
+    STUDENT_SESSION
 }

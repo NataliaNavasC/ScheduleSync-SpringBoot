@@ -6,8 +6,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import javax.crypto.spec.SecretKeySpec;
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -34,7 +32,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter{
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(SecurityConstants.HEADER_AUTHORIZATION_KEY);
 		if (token != null) {
-			// Se procesa el token y se recupera el nombre de usuario.
+            // Se procesa el token y se recupera el nombre de usuario.
 			Claims body = Jwts.parserBuilder()
             .setSigningKey(getSignInkey())
             .build()

@@ -1,6 +1,5 @@
 package com.example.crpypst.ScheduleSync.security.authentication;
 
-import org.hibernate.engine.jdbc.env.internal.LobCreationLogging_.logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -17,8 +16,6 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import com.example.crpypst.ScheduleSync.security.jwtfilters.JWTAuthenticationFilter;
 import com.example.crpypst.ScheduleSync.security.jwtfilters.JWTAuthorizationFilter;
-
-import ch.qos.logback.classic.Logger;
 
 @Configuration
 public class WebSecurity {
@@ -42,7 +39,6 @@ public class WebSecurity {
             .anyRequest().authenticated())
             .addFilter(new JWTAuthenticationFilter(context.getBean(AuthenticationManager.class)))
             .addFilter(new JWTAuthorizationFilter(context.getBean(AuthenticationManager.class)));
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA Web secirity");
         return http.build();
     }
 

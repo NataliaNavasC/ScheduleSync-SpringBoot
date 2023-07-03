@@ -19,14 +19,17 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.example.crpypst.ScheduleSync.model.Course;
 import com.example.crpypst.ScheduleSync.model.ScheduledSession;
 import com.example.crpypst.ScheduleSync.model.Session;
+import com.example.crpypst.ScheduleSync.model.StudentSession;
 import com.example.crpypst.ScheduleSync.model.user.Admin;
 import com.example.crpypst.ScheduleSync.model.user.Student;
 import com.example.crpypst.ScheduleSync.model.user.Teacher;
 import com.example.crpypst.ScheduleSync.repository.ICourseRepository;
 import com.example.crpypst.ScheduleSync.repository.IScheduledSessionRepository;
 import com.example.crpypst.ScheduleSync.repository.ISessionRepository;
+import com.example.crpypst.ScheduleSync.repository.IStudentSessionRepository;
 import com.example.crpypst.ScheduleSync.repository.IUserRepository;
 import com.example.crpypst.ScheduleSync.utils.enums.CEFRLevel;
+import com.example.crpypst.ScheduleSync.utils.enums.ScheduleSessionStatus;
 import com.example.crpypst.ScheduleSync.utils.enums.SessionType;
 
 @Configuration
@@ -37,7 +40,8 @@ public class ScheduleSyncConfig {
     
     @Bean
     CommandLineRunner loadData(ICourseRepository courseRepository, ISessionRepository sessionRepository,
-     IScheduledSessionRepository scheduledSessionRepository, IUserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder){
+     IScheduledSessionRepository scheduledSessionRepository, IUserRepository userRepository, 
+     BCryptPasswordEncoder bCryptPasswordEncoder, IStudentSessionRepository studentSessionRepository){
         return args -> {
             
             Course c1 = new Course(1, "English", CEFRLevel.B2, true);
@@ -56,12 +60,12 @@ public class ScheduleSyncConfig {
             s4 = sessionRepository.save(s4);
             s5 = sessionRepository.save(s5);
             
-            ScheduledSession ss1 = new ScheduledSession(1, LocalDateTime.now(), null, new ArrayList<Student>(), s1);
-            ScheduledSession ss2 = new ScheduledSession(2, LocalDateTime.now(), null, new ArrayList<Student>(), s2);
-            ScheduledSession ss3 = new ScheduledSession(3, LocalDateTime.now(), null, new ArrayList<Student>(), s1);
-            ScheduledSession ss4 = new ScheduledSession(4, LocalDateTime.now(), null, new ArrayList<Student>(), s3);
-            ScheduledSession ss5 = new ScheduledSession(5, LocalDateTime.now(), null, new ArrayList<Student>(), s4);
-            ScheduledSession ss6 = new ScheduledSession(6, LocalDateTime.now(), null, new ArrayList<Student>(), s5);
+            ScheduledSession ss1 = new ScheduledSession(1, LocalDateTime.now(), null, s1);
+            ScheduledSession ss2 = new ScheduledSession(2, LocalDateTime.now(), null, s2);
+            ScheduledSession ss3 = new ScheduledSession(3, LocalDateTime.now(), null, s1);
+            ScheduledSession ss4 = new ScheduledSession(4, LocalDateTime.now(), null, s3);
+            ScheduledSession ss5 = new ScheduledSession(5, LocalDateTime.now(), null, s4);
+            ScheduledSession ss6 = new ScheduledSession(6, LocalDateTime.now(), null, s5);
             ss1 = scheduledSessionRepository.save(ss1);
             ss2 = scheduledSessionRepository.save(ss2);
             ss3 = scheduledSessionRepository.save(ss3);
@@ -69,23 +73,25 @@ public class ScheduleSyncConfig {
             ss5 = scheduledSessionRepository.save(ss5);
             ss6 = scheduledSessionRepository.save(ss6);
             
-            // Student st1 = new Student(1, "lostvayne", "dummy", true,c1,Arrays.asList(ss1,ss2));
-            Student st1 = new Student(1, "lostvayne", bCryptPasswordEncoder.encode("dummy"), true,c1,new ArrayList<ScheduledSession>(Arrays.asList(ss1,ss2)));
-            Student st2 = new Student(2, "crpypst", bCryptPasswordEncoder.encode("dummy"), true,c1,new ArrayList<ScheduledSession>(Arrays.asList(ss1,ss2)));
-            Student st3 = new Student(3, "test", bCryptPasswordEncoder.encode("dummy"), false,c2,new ArrayList<ScheduledSession>(Arrays.asList(ss1,ss3)));
+            Student st1 = new Student(1, "lostvayne", bCryptPasswordEncoder.encode("dummy"), true,c1);
+            Student st2 = new Student(2, "crpypst", bCryptPasswordEncoder.encode("dummy"), true,c1);
+            Student st3 = new Student(3, "test", bCryptPasswordEncoder.encode("dummy"), false,c2);
             st1 = userRepository.save(st1);
             st2 = userRepository.save(st2);
             st3 = userRepository.save(st3);
 
-            ss1.getStudents().add(st1);
-            ss1.getStudents().add(st2);
-            ss1.getStudents().add(st3);
-            ss2.getStudents().add(st1);
-            ss2.getStudents().add(st2);
-            ss3.getStudents().add(st3);
-            scheduledSessionRepository.save(ss1);
-            scheduledSessionRepository.save(ss2);
-            scheduledSessionRepository.save(ss3);
+            StudentSession sts1 = new StudentSession(1, ScheduleSessionStatus.TAKEN, st1, ss1);
+            StudentSession sts2 = new StudentSession(2, ScheduleSessionStatus.PENDING, st1, ss2);
+            StudentSession sts3 = new StudentSession(3, ScheduleSessionStatus.TAKEN, st2, ss1);
+            StudentSession sts4 = new StudentSession(4, ScheduleSessionStatus.PENDING, st2, ss2);
+            StudentSession sts5 = new StudentSession(5, ScheduleSessionStatus.TAKEN, st3, ss1);
+            StudentSession sts6 = new StudentSession(6, ScheduleSessionStatus.CANCELLED, st3, ss3);
+            sts1 = studentSessionRepository.save(sts1);
+            sts1 = studentSessionRepository.save(sts2);
+            sts1 = studentSessionRepository.save(sts3);
+            sts1 = studentSessionRepository.save(sts4);
+            sts1 = studentSessionRepository.save(sts5);
+            sts1 = studentSessionRepository.save(sts6);
       
             Teacher t1 = new Teacher(1, "profe1", bCryptPasswordEncoder.encode("dummy"), true);
             Teacher t2 = new Teacher(2, "profe2", bCryptPasswordEncoder.encode("dummy"), true);
