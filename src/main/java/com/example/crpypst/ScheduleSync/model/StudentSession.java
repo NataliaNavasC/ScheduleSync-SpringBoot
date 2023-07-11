@@ -1,7 +1,7 @@
 package com.example.crpypst.ScheduleSync.model;
 
 import com.example.crpypst.ScheduleSync.model.user.Student;
-import com.example.crpypst.ScheduleSync.utils.enums.ScheduleSessionStatus;
+import com.example.crpypst.ScheduleSync.utils.enums.StudentSessionStatus;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -9,6 +9,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -19,21 +20,22 @@ public class StudentSession {
     private long id;
 
     @Enumerated(value = EnumType.STRING)
-    private ScheduleSessionStatus scheduleSessionStatus;
+    private StudentSessionStatus studentSessionStatus;
 
     @ManyToOne
     private Student student;
 
-    @ManyToOne 
+    @ManyToOne
+    @JoinColumn(nullable = false)
     ScheduledSession scheduledSession;
 
     public StudentSession() {
     }
 
-    public StudentSession(long id, ScheduleSessionStatus scheduleSessionStatus, Student student,
+    public StudentSession(long id, StudentSessionStatus studentSessionStatus, Student student,
             ScheduledSession scheduledSession) {
         this.id = id;
-        this.scheduleSessionStatus = scheduleSessionStatus;
+        this.studentSessionStatus = studentSessionStatus;
         this.student = student;
         this.scheduledSession = scheduledSession;
     }
@@ -44,14 +46,6 @@ public class StudentSession {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public ScheduleSessionStatus getScheduleSessionStatus() {
-        return scheduleSessionStatus;
-    }
-
-    public void setScheduleSessionStatus(ScheduleSessionStatus scheduleSessionStatus) {
-        this.scheduleSessionStatus = scheduleSessionStatus;
     }
 
     public Student getStudent() {
@@ -68,6 +62,14 @@ public class StudentSession {
 
     public void setScheduledSession(ScheduledSession scheduledSession) {
         this.scheduledSession = scheduledSession;
+    }
+
+    public StudentSessionStatus getStudentSessionStatus() {
+        return studentSessionStatus;
+    }
+
+    public void setStudentSessionStatus(StudentSessionStatus studentSessionStatus) {
+        this.studentSessionStatus = studentSessionStatus;
     }
 
 }

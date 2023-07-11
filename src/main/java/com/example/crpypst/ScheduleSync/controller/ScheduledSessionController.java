@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.crpypst.ScheduleSync.model.ScheduledSession;
@@ -53,5 +54,16 @@ public class ScheduledSessionController {
     public boolean deleteScheduledSession(@PathVariable long id){
         return scheduledSessionService.deteleSessionById(id);
     }
+
+    @GetMapping("/session/{id}")
+    public List<ScheduledSessionDTO> getScheduledSessionBySessionId(@PathVariable long id, @RequestParam(defaultValue = "true") boolean future ){
+        return dtoConverter.convertListType(scheduledSessionService.getScheduledSessionBySessionId(id,future), ScheduledSessionDTO.class);
+    }
+
+    @GetMapping("/teacher/{username}")
+    public List<ScheduledSessionDTO> getScheduledSessionByTeacherUsername(@PathVariable String username){
+        return dtoConverter.convertListType(scheduledSessionService.getScheduledSessionByTeacherUsername(username), ScheduledSessionDTO.class);
+    }
+    
 
 }

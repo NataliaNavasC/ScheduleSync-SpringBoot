@@ -15,4 +15,8 @@ public interface IScheduledSessionService {
     public ScheduledSession updateScheduledSession(long id, ScheduledSession scheduledSession);
 
     public boolean deteleSessionById(long id);
+
+    public List<ScheduledSession> getScheduledSessionBySessionId(long id, boolean future);
+
+    public List<ScheduledSession> getScheduledSessionByTeacherUsername(String username);
 }

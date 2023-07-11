@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.crpypst.ScheduleSync.model.Session;
+import com.example.crpypst.ScheduleSync.model.dto.SessionDTO;
 import com.example.crpypst.ScheduleSync.repository.ISessionRepository;
 import com.example.crpypst.ScheduleSync.service.interfaces.ISessionService;
 import com.example.crpypst.ScheduleSync.utils.enums.EntityType;
@@ -48,6 +49,9 @@ public class SessionService implements ISessionService{
         return true;
     }
 
-   
+   @Override
+   public List<Session> getSessionsByCourseId(long id){
+        return this.sessionRepository.getSessionsByCourseId(id);
+    }
     
 }

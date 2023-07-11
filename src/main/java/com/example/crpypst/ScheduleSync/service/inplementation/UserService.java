@@ -14,6 +14,7 @@ import com.example.crpypst.ScheduleSync.model.user.User;
 import com.example.crpypst.ScheduleSync.repository.IUserRepository;
 import com.example.crpypst.ScheduleSync.service.interfaces.IUserService;
 import com.example.crpypst.ScheduleSync.utils.enums.EntityType;
+import com.example.crpypst.ScheduleSync.utils.enums.Role;
 import com.example.crpypst.ScheduleSync.utils.exceptions.entitynotfound.EntityNotFoundException;
 import com.example.crpypst.ScheduleSync.utils.general.DTOConverter;
 
@@ -39,7 +40,10 @@ public class UserService implements IUserService{
 
     @Override
     public UserDTO getUserByUsername(String username){
-        return dtoConverter.convertType(this.userRepository.findByUsername(username).orElseThrow(()-> new EntityNotFoundException(username, EntityType.USER)),UserDTO.class);
+        User user = this.userRepository.findByUsername(username).orElseThrow(()-> new EntityNotFoundException(username, EntityType.USER));
+        UserDTO userDTO = dtoConverter.convertType(user,UserDTO.class);
+        userDTO.setRole(Role.valueOf(user.getClass().getSimpleName().toUpperCase()));
+        return userDTO;
     }
 
     @Override

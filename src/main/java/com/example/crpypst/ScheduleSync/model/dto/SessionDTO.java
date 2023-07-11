@@ -3,6 +3,7 @@ package com.example.crpypst.ScheduleSync.model.dto;
 import java.util.List;
 
 import com.example.crpypst.ScheduleSync.utils.enums.SessionType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class SessionDTO {
 
@@ -10,6 +11,7 @@ public class SessionDTO {
     private String topic;
     private SessionType sessionType;
     private CourseDTO course;
+    @JsonIgnore
     private List<ScheduledSessionDTO> scheduledSessions;
     
     

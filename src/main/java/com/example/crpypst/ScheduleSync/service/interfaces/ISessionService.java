@@ -16,4 +16,6 @@ public interface ISessionService {
 
     public boolean deteleSessionById(long id);
 
+    public List<Session> getSessionsByCourseId(long id);
+
 }

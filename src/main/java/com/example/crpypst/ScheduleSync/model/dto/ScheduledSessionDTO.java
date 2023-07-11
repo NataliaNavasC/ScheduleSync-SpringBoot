@@ -1,7 +1,6 @@
 package com.example.crpypst.ScheduleSync.model.dto;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 
 public class ScheduledSessionDTO {
@@ -9,17 +8,15 @@ public class ScheduledSessionDTO {
     private long id;
     private LocalDateTime date;
     private UserDTO teacher;
-    private List<UserDTO> students;
     private SessionDTO session;
     
     public ScheduledSessionDTO() {
     }
 
-    public ScheduledSessionDTO(long id, LocalDateTime date, UserDTO teacher, List<UserDTO> students, SessionDTO session) {
+    public ScheduledSessionDTO(long id, LocalDateTime date, UserDTO teacher, SessionDTO session) {
         this.id = id;
         this.date = date;
         this.teacher = teacher;
-        this.students = students;
         this.session = session;
     }
 
@@ -45,14 +42,6 @@ public class ScheduledSessionDTO {
 
     public void setTeacher(UserDTO teacher) {
         this.teacher = teacher;
-    }
-
-    public List<UserDTO> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<UserDTO> students) {
-        this.students = students;
     }
 
     public SessionDTO getSession() {

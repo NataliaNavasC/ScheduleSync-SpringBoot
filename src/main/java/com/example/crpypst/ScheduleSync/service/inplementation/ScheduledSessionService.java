@@ -1,5 +1,6 @@
 package com.example.crpypst.ScheduleSync.service.inplementation;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,21 @@ public class ScheduledSessionService implements IScheduledSessionService{
         this.scheduledSessionRepository.delete(scheduledSession);
         return true;
     }
+
+    @Override
+    public List<ScheduledSession> getScheduledSessionBySessionId(long id, boolean future) {
+        List<ScheduledSession> scheduledSessions = this.scheduledSessionRepository.findBySessionId(id);
+        if(future){
+            scheduledSessions.stream().filter(ss -> ss.getDate().compareTo(LocalDateTime.now())>0).toList();
+        }
+        return scheduledSessions;
+    }
+
+    @Override
+    public List<ScheduledSession> getScheduledSessionByTeacherUsername(String username) {
+        return this.scheduledSessionRepository.findByTeacherUsername(username);
+    }
+
 
 
 }

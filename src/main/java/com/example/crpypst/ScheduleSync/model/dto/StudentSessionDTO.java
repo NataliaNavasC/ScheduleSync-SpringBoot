@@ -1,19 +1,26 @@
 package com.example.crpypst.ScheduleSync.model.dto;
 
-import com.example.crpypst.ScheduleSync.utils.enums.ScheduleSessionStatus;
+import com.example.crpypst.ScheduleSync.utils.enums.StudentSessionStatus;
 
 public class StudentSessionDTO {
 
     private long id;
 
-    private ScheduleSessionStatus scheduleSessionStatus;
+    private StudentSessionStatus studentSessionStatus;
+
+    private UserDTO student;
+
+    private ScheduledSessionDTO scheduledSession;
 
     public StudentSessionDTO() {
     }
 
-    public StudentSessionDTO(long id, ScheduleSessionStatus scheduleSessionStatus) {
+    public StudentSessionDTO(long id, StudentSessionStatus studentSessionStatus, UserDTO student,
+            ScheduledSessionDTO scheduledSession) {
         this.id = id;
-        this.scheduleSessionStatus = scheduleSessionStatus;
+        this.studentSessionStatus = studentSessionStatus;
+        this.student = student;
+        this.scheduledSession = scheduledSession;
     }
 
     public long getId() {
@@ -24,14 +31,28 @@ public class StudentSessionDTO {
         this.id = id;
     }
 
-    public ScheduleSessionStatus getScheduleSessionStatus() {
-        return scheduleSessionStatus;
+    public UserDTO getStudent() {
+        return student;
     }
 
-    public void setScheduleSessionStatus(ScheduleSessionStatus scheduleSessionStatus) {
-        this.scheduleSessionStatus = scheduleSessionStatus;
+    public void setStudent(UserDTO student) {
+        this.student = student;
     }
 
-    
+    public ScheduledSessionDTO getScheduledSession() {
+        return scheduledSession;
+    }
+
+    public void setScheduledSession(ScheduledSessionDTO scheduledSession) {
+        this.scheduledSession = scheduledSession;
+    }
+
+    public StudentSessionStatus getStudentSessionStatus() {
+        return studentSessionStatus;
+    }
+
+    public void setStudentSessionStatus(StudentSessionStatus studentSessionStatus) {
+        this.studentSessionStatus = studentSessionStatus;
+    }
 
 }

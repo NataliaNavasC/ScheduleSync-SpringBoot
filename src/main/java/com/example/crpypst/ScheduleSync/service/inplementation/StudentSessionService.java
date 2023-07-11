@@ -21,6 +21,11 @@ public class StudentSessionService implements IStudentSessionService{
     public List<StudentSession> getStudentSessions() {
         return this.studentSessionRepository.findAll();
     }
+    
+    @Override
+    public StudentSession getStudentSessionById(long id){
+        return this.studentSessionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, EntityType.STUDENT_SESSION));
+    }
 
     @Override
     public List<StudentSession> getStudentSessionsByUsername(String username) {
@@ -40,9 +45,16 @@ public class StudentSessionService implements IStudentSessionService{
     @Override
     public StudentSession updateStudentSession(long id, StudentSession studentSessionToUpdate) {
         return this.studentSessionRepository.findById(id).map( studentSession -> {
-            studentSession.setScheduleSessionStatus(studentSessionToUpdate.getScheduleSessionStatus());
+            studentSession.setStudentSessionStatus(studentSessionToUpdate.getStudentSessionStatus());
             return this.studentSessionRepository.save(studentSession);
         }).orElseThrow(() -> new EntityNotFoundException(id, EntityType.STUDENT_SESSION));
+    }
+
+    @Override
+    public boolean deleteStudentSessionById(long id) {
+        StudentSession studentSession = this.studentSessionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, EntityType.STUDENT_SESSION));
+        this.studentSessionRepository.delete(studentSession);
+        return true;
     }
 
 }

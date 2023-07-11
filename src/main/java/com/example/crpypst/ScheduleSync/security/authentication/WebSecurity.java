@@ -34,8 +34,8 @@ public class WebSecurity {
         http.csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .cors(Customizer.withDefaults())
-            .authorizeHttpRequests(auth -> auth.requestMatchers("/login").permitAll()
-            .requestMatchers("/login").permitAll()
+            .authorizeHttpRequests(auth -> auth.requestMatchers("/login","/h2-console").permitAll()
+            .requestMatchers("/login","/h2-console").permitAll()
             .anyRequest().authenticated())
             .addFilter(new JWTAuthenticationFilter(context.getBean(AuthenticationManager.class)))
             .addFilter(new JWTAuthorizationFilter(context.getBean(AuthenticationManager.class)));

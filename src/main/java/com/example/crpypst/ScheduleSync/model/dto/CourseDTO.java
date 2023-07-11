@@ -2,6 +2,8 @@ package com.example.crpypst.ScheduleSync.model.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 public class CourseDTO {
     
@@ -9,20 +11,15 @@ public class CourseDTO {
     private String language;
     private String level;
     private boolean isCertified;
-    private List<UserDTO> students;
-    private List<SessionDTO> sessions;
     
     public CourseDTO() {
     }
 
-    public CourseDTO(long id, String language, String level, boolean isCertified, List<UserDTO> students,
-            List<SessionDTO> sessions) {
+    public CourseDTO(long id, String language, String level, boolean isCertified) {
         this.id = id;
         this.language = language;
         this.level = level;
         this.isCertified = isCertified;
-        this.students = students;
-        this.sessions = sessions;
     }
 
     public long getId() {
@@ -57,22 +54,5 @@ public class CourseDTO {
         this.isCertified = isCertified;
     }
 
-    public List<UserDTO> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<UserDTO> students) {
-        this.students = students;
-    }
-
-    public List<SessionDTO> getSessions() {
-        return sessions;
-    }
-
-    public void setSessions(List<SessionDTO> sessions) {
-        this.sessions = sessions;
-    }
-
-    
     
 }

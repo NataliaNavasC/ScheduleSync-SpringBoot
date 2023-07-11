@@ -53,4 +53,9 @@ public class SessionController {
     public boolean deleteSession(@PathVariable long id){
         return sessionService.deteleSessionById(id);
     }
+
+    @GetMapping("/course/{id}")
+    public List<SessionDTO> getSessionsByCourseId(@PathVariable long id){
+        return this.dtoConverter.convertListType(this.sessionService.getSessionsByCourseId(id), SessionDTO.class);
+    }
 }

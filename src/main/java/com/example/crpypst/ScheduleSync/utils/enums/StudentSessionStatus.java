@@ -1,6 +1,6 @@
 package com.example.crpypst.ScheduleSync.utils.enums;
 
-public enum ScheduleSessionStatus {
+public enum StudentSessionStatus {
     PENDING,
     TAKEN,
     MISSED,
